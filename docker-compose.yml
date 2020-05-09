@@ -1,6 +1,12 @@
 version: "3.3"
 
 services:
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
+    networks:
+      - app_net
   app:
     image: node:12-slim
     working_dir: /app
@@ -30,6 +36,7 @@ services:
       DB_PORT: 3306
       DB_NAME: votes
       DB_USER: root
+      DB_PASSWORD: 123
       SPRING_PROFILES_ACTIVE: local
       SPRING_JPA_SHOW_SQL: 'true'
       APP_ENV: local
@@ -46,6 +53,7 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
       MYSQL_DATABASE: votes
       MYSQL_USER: root
+      MYSQL_PASSWORD: 123
     networks:
       - app_net
     command: --init-file /data/application/init.sql
